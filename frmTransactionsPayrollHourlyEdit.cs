@@ -12,19 +12,21 @@ namespace PECS_v1
 {
     public partial class frmTransactionsPayrollHourlyEdit : Form
     {
-
+        public frmTransactionsPayrollHourly frmTransPayrollHourly;
         private DBConnector dbcTransac;
         private BindingSource bsTransac = new BindingSource();
         private String month = null;
-        public frmTransactionsPayrollHourlyEdit(String selectedMonth)
+		
+        public frmTransactionsPayrollHourlyEdit(String selectedMonth, frmTransactionsPayrollHourly frmTransPRH)
         {
+            frmTransPayrollHourly = frmTransPRH;
             month = selectedMonth;
-            Console.WriteLine(month);
             InitializeComponent();
             loadDBCFacDetails();
             loadDgvTransac();
         }
 
+		//load binding data from database
         private void loadDBCFacDetails()
         {
             String sql = @" SELECT TransID,
@@ -38,26 +40,32 @@ namespace PECS_v1
 	                        TransDatePosting,
 	                        TransDateTransaction
                             FROM Transactions trans
-                            WHERE TransDesc = '" + month + "'";
+                            WHERE refTransTypeID = 5
+                            AND TransStatusID = 11
+                            AND TransDesc = '" + month + "'";
             dbcTransac = new DBConnector(sql, "Transactions");
 
         }
+
+        // dgv: DataGridView, delete selected Transactions
         private void dgvTransaction_UserDeletingRow(object sender,
             DataGridViewRowCancelEventArgs e)
         {
 
             List<DataGridViewRow> selectedRows = new List<DataGridViewRow>();
             foreach (DataGridViewRow row in dgvTransaction.SelectedRows)
+            {
                 selectedRows.Add(row);
+            }
 
             foreach (DataGridViewRow row in selectedRows)
             {
                 String sql = "DELETE FROM Transactions WHERE TransID = " + row.Cells[0].Value.ToString();
                 dbcTransac.executeSQL(sql);
             }
-
-
         }
+
+		//load data to DataGridView
         private void loadDgvTransac()
         {
             bsTransac.DataSource = dbcTransac.getDT();
@@ -67,11 +75,15 @@ namespace PECS_v1
             dgvTransaction.Columns["TransID"].Visible = false;
             dgvTransaction.Columns["UnitID"].Width = 80;
             dgvTransaction.Columns["TransDesc"].Width = 200;
+
         }
 
         private void cmdClose_Click(object sender, EventArgs e)
         {
+            frmTransPayrollHourly.loadLstPayrollMonths();
+            frmTransPayrollHourly.Refresh();
             this.Close();
+            
         }
 
     }
