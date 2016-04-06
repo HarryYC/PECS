@@ -26,7 +26,7 @@ namespace PECS_v1
             loadDgvTransac();
         }
 
-		//load binding data from database
+	//load binding data from database
         private void loadDBCFacDetails()
         {
             String sql = @" SELECT TransID,
@@ -65,7 +65,7 @@ namespace PECS_v1
             }
         }
 
-		//load data to DataGridView
+	//load data to DataGridView
         private void loadDgvTransac()
         {
             bsTransac.DataSource = dbcTransac.getDT();
