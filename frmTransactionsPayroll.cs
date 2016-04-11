@@ -47,7 +47,7 @@ namespace PECS_v1
 
         //Load Page
 
-        private void loadPage()
+        public void loadPage()
         {
             loadLstPayrollMonths();
             loadLstPayrollGroup();
@@ -896,6 +896,12 @@ namespace PECS_v1
             {
                 MessageBox.Show("You must first select a target month for payroll processing.");
             }
+        }
+
+        private void cmdDelPayroll_Click(object sender, EventArgs e)
+        {
+            frmTransactionsPayrollEdit frmPayEdit = new frmTransactionsPayrollEdit(this);
+            frmPayEdit.Show();
         }
 
 

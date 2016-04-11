@@ -29,15 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTransactionsPayrollEdit));
             this.cmsEmpHours = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyAllcmsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label8 = new System.Windows.Forms.Label();
             this.dgvTransaction = new System.Windows.Forms.DataGridView();
-            this.cmdClose = new System.Windows.Forms.Button();
             this.comboMonth = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.cmdClose = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.cmsEmpHours.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransaction)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // cmsEmpHours
@@ -60,9 +63,9 @@
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(98, 35);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(218, 42);
+            this.label8.Size = new System.Drawing.Size(264, 42);
             this.label8.TabIndex = 256;
-            this.label8.Text = "Edit Payroll";
+            this.label8.Text = "Delete Payroll";
             // 
             // dgvTransaction
             // 
@@ -74,20 +77,6 @@
             this.dgvTransaction.Size = new System.Drawing.Size(1036, 594);
             this.dgvTransaction.TabIndex = 259;
             this.dgvTransaction.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvTransaction_UserDeletingRow);
-
-            // 
-            // cmdClose
-            // 
-            this.cmdClose.BackColor = System.Drawing.Color.Transparent;
-            this.cmdClose.FlatAppearance.BorderSize = 0;
-            this.cmdClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmdClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdClose.Location = new System.Drawing.Point(1099, 35);
-            this.cmdClose.Name = "cmdClose";
-            this.cmdClose.Size = new System.Drawing.Size(85, 20);
-            this.cmdClose.TabIndex = 260;
-            this.cmdClose.Text = " CLOSE";
-            this.cmdClose.UseVisualStyleBackColor = false;
             // 
             // comboMonth
             // 
@@ -101,11 +90,38 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(105, 101);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(102, 101);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 13);
+            this.label1.Size = new System.Drawing.Size(230, 13);
             this.label1.TabIndex = 262;
-            this.label1.Text = "From Month:";
+            this.label1.Text = "From Selected Month to Current Month:";
+            // 
+            // cmdClose
+            // 
+            this.cmdClose.BackColor = System.Drawing.Color.Transparent;
+            this.cmdClose.FlatAppearance.BorderSize = 0;
+            this.cmdClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmdClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdClose.Image = ((System.Drawing.Image)(resources.GetObject("cmdClose.Image")));
+            this.cmdClose.Location = new System.Drawing.Point(1099, 35);
+            this.cmdClose.Name = "cmdClose";
+            this.cmdClose.Size = new System.Drawing.Size(85, 20);
+            this.cmdClose.TabIndex = 263;
+            this.cmdClose.Text = " CLOSE";
+            this.cmdClose.UseVisualStyleBackColor = false;
+            this.cmdClose.Click += new System.EventHandler(this.cmdClose_Click);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(15, 12);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(77, 85);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox2.TabIndex = 264;
+            this.pictureBox2.TabStop = false;
             // 
             // frmTransactionsPayrollEdit
             // 
@@ -113,15 +129,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(173)))), ((int)(((byte)(174)))));
             this.ClientSize = new System.Drawing.Size(1214, 774);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.cmdClose);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboMonth);
-            this.Controls.Add(this.cmdClose);
             this.Controls.Add(this.dgvTransaction);
             this.Controls.Add(this.label8);
             this.Name = "frmTransactionsPayrollEdit";
             this.Text = "Hourly Payroll Transactions";
             this.cmsEmpHours.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransaction)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,9 +151,10 @@
         private System.Windows.Forms.ContextMenuStrip cmsEmpHours;
         private System.Windows.Forms.ToolStripMenuItem copyAllcmsMenuItem;
         private System.Windows.Forms.DataGridView dgvTransaction;
-        private System.Windows.Forms.Button cmdClose;
         private System.Windows.Forms.ComboBox comboMonth;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button cmdClose;
+        private System.Windows.Forms.PictureBox pictureBox2;
 
     }
 }

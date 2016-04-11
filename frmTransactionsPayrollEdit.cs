@@ -12,16 +12,17 @@ namespace PECS_v1
 {
     public partial class frmTransactionsPayrollEdit : Form
     {
+        public frmTransactionsPayroll frmTransPayroll;
         private DBConnector dbcTransac;
         private BindingSource bsTransac = new BindingSource();
         private String month = "";
         private Boolean firstLoop = true;
-        public frmTransactionsPayrollEdit()
+        public frmTransactionsPayrollEdit(frmTransactionsPayroll frmTransPR)
         {
+            frmTransPayroll = frmTransPR;
             InitializeComponent();
-            
             comboMonth.DataSource = System.Globalization.DateTimeFormatInfo.InvariantInfo.MonthNames;
-  
+
         }
 
         private void loadDgvTransac()
@@ -75,14 +76,19 @@ namespace PECS_v1
         {
 
             List<DataGridViewRow> selectedRows = new List<DataGridViewRow>();
+            //All records will be deleted in the first loop
             if (firstLoop)
             {
+                String sql = "DELETE FROM Transactions WHERE TransID IN (";
                 foreach (DataGridViewRow row in dgvTransaction.SelectedRows)
                 {
-                    String sql = "DELETE FROM Transactions WHERE TransID = " + row.Cells[0].Value.ToString();
-                    //Console.WriteLine(sql);
-                    dbcTransac.executeSQL(sql);
+                    sql += row.Cells[0].Value.ToString() + ",";
                 }
+                sql = sql.TrimEnd(',');
+                sql += ")";
+                //Console.WriteLine(sql);
+                dbcTransac.executeSQL(sql);
+
                 firstLoop = false;
             }
             if (dgvTransaction.SelectedRows.Count == 1)
@@ -92,5 +98,12 @@ namespace PECS_v1
 
 
         }
+
+        private void cmdClose_Click(object sender, EventArgs e)
+        {
+            frmTransPayroll.loadPage();
+            this.Close();
+        }
+
     }
 }

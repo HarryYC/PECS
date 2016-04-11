@@ -64,6 +64,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txttemsCalc = new System.Windows.Forms.TextBox();
             this.cmdRunByFund = new System.Windows.Forms.Button();
+            this.cmdDelPayroll = new System.Windows.Forms.Button();
             this.cmsLstPayroll.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -78,7 +79,7 @@
             this.cmdClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmdClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdClose.Image = ((System.Drawing.Image)(resources.GetObject("cmdClose.Image")));
-            this.cmdClose.Location = new System.Drawing.Point(933, 21);
+            this.cmdClose.Location = new System.Drawing.Point(780, 21);
             this.cmdClose.Name = "cmdClose";
             this.cmdClose.Size = new System.Drawing.Size(85, 20);
             this.cmdClose.TabIndex = 18;
@@ -112,7 +113,7 @@
             this.cmdRunTransactions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdRunTransactions.Image = ((System.Drawing.Image)(resources.GetObject("cmdRunTransactions.Image")));
             this.cmdRunTransactions.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdRunTransactions.Location = new System.Drawing.Point(324, 143);
+            this.cmdRunTransactions.Location = new System.Drawing.Point(324, 165);
             this.cmdRunTransactions.Name = "cmdRunTransactions";
             this.cmdRunTransactions.Size = new System.Drawing.Size(130, 30);
             this.cmdRunTransactions.TabIndex = 180;
@@ -134,7 +135,7 @@
             this.lstPayroll.GridLines = true;
             this.lstPayroll.Location = new System.Drawing.Point(38, 531);
             this.lstPayroll.Name = "lstPayroll";
-            this.lstPayroll.Size = new System.Drawing.Size(1006, 143);
+            this.lstPayroll.Size = new System.Drawing.Size(853, 143);
             this.lstPayroll.TabIndex = 181;
             this.lstPayroll.UseCompatibleStateImageBehavior = false;
             this.lstPayroll.View = System.Windows.Forms.View.Details;
@@ -190,7 +191,7 @@
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 705);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1096, 83);
+            this.pictureBox1.Size = new System.Drawing.Size(943, 83);
             this.pictureBox1.TabIndex = 187;
             this.pictureBox1.TabStop = false;
             // 
@@ -291,7 +292,7 @@
             this.lstGLPayroll.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lstGLPayroll.Location = new System.Drawing.Point(960, 231);
             this.lstGLPayroll.Name = "lstGLPayroll";
-            this.lstGLPayroll.Size = new System.Drawing.Size(84, 261);
+            this.lstGLPayroll.Size = new System.Drawing.Size(0, 261);
             this.lstGLPayroll.TabIndex = 240;
             this.lstGLPayroll.UseCompatibleStateImageBehavior = false;
             this.lstGLPayroll.View = System.Windows.Forms.View.Details;
@@ -380,7 +381,7 @@
             this.cmdSummerPayroll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdSummerPayroll.Image = ((System.Drawing.Image)(resources.GetObject("cmdSummerPayroll.Image")));
             this.cmdSummerPayroll.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdSummerPayroll.Location = new System.Drawing.Point(885, 73);
+            this.cmdSummerPayroll.Location = new System.Drawing.Point(732, 73);
             this.cmdSummerPayroll.Name = "cmdSummerPayroll";
             this.cmdSummerPayroll.Size = new System.Drawing.Size(159, 30);
             this.cmdSummerPayroll.TabIndex = 245;
@@ -399,7 +400,7 @@
             this.cmdHourlyPayroll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdHourlyPayroll.Image = ((System.Drawing.Image)(resources.GetObject("cmdHourlyPayroll.Image")));
             this.cmdHourlyPayroll.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cmdHourlyPayroll.Location = new System.Drawing.Point(885, 110);
+            this.cmdHourlyPayroll.Location = new System.Drawing.Point(732, 110);
             this.cmdHourlyPayroll.Name = "cmdHourlyPayroll";
             this.cmdHourlyPayroll.Size = new System.Drawing.Size(154, 30);
             this.cmdHourlyPayroll.TabIndex = 246;
@@ -464,7 +465,7 @@
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.Location = new System.Drawing.Point(852, 507);
+            this.label9.Location = new System.Drawing.Point(699, 507);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(62, 13);
             this.label9.TabIndex = 904;
@@ -474,7 +475,7 @@
             // 
             this.txttemsCalc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txttemsCalc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txttemsCalc.Location = new System.Drawing.Point(933, 505);
+            this.txttemsCalc.Location = new System.Drawing.Point(780, 505);
             this.txttemsCalc.Name = "txttemsCalc";
             this.txttemsCalc.Size = new System.Drawing.Size(111, 20);
             this.txttemsCalc.TabIndex = 903;
@@ -492,6 +493,23 @@
             this.cmdRunByFund.UseVisualStyleBackColor = true;
             this.cmdRunByFund.Click += new System.EventHandler(this.cmdRunByFund_Click);
             // 
+            // cmdDelPayroll
+            // 
+            this.cmdDelPayroll.BackColor = System.Drawing.Color.Transparent;
+            this.cmdDelPayroll.FlatAppearance.BorderSize = 0;
+            this.cmdDelPayroll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmdDelPayroll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdDelPayroll.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cmdDelPayroll.Location = new System.Drawing.Point(324, 140);
+            this.cmdDelPayroll.Name = "cmdDelPayroll";
+            this.cmdDelPayroll.Size = new System.Drawing.Size(130, 30);
+            this.cmdDelPayroll.TabIndex = 906;
+            this.cmdDelPayroll.TabStop = false;
+            this.cmdDelPayroll.Text = "DEL PAYROLL";
+            this.cmdDelPayroll.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cmdDelPayroll.UseVisualStyleBackColor = false;
+            this.cmdDelPayroll.Click += new System.EventHandler(this.cmdDelPayroll_Click);
+            // 
             // frmTransactionsPayroll
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -500,7 +518,8 @@
             this.AutoScrollMinSize = new System.Drawing.Size(1096, 800);
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(173)))), ((int)(((byte)(174)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1231, 749);
+            this.ClientSize = new System.Drawing.Size(1282, 749);
+            this.Controls.Add(this.cmdDelPayroll);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txttemsCalc);
             this.Controls.Add(this.lblPendingPayrollCount);
@@ -576,5 +595,6 @@
         private System.Windows.Forms.TextBox txttemsCalc;
         private System.Windows.Forms.ToolStripMenuItem calculateSelectedToolStripMenuItem;
         private System.Windows.Forms.Button cmdRunByFund;
+        private System.Windows.Forms.Button cmdDelPayroll;
     }
 }
