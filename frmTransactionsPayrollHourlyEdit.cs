@@ -16,17 +16,24 @@ namespace PECS_v1
         private DBConnector dbcTransac;
         private BindingSource bsTransac = new BindingSource();
         private String month = null;
+<<<<<<< HEAD
+=======
+		
+>>>>>>> a7ee49726bc261177a8938e3268901ae6aaf6aa4
         public frmTransactionsPayrollHourlyEdit(String selectedMonth, frmTransactionsPayrollHourly frmTransPRH)
         {
             frmTransPayrollHourly = frmTransPRH;
             month = selectedMonth;
-            Console.WriteLine(month);
             InitializeComponent();
             loadDBCFacDetails();
             loadDgvTransac();
         }
 
+<<<<<<< HEAD
 
+=======
+		//load binding data from database
+>>>>>>> a7ee49726bc261177a8938e3268901ae6aaf6aa4
         private void loadDBCFacDetails()
         {
             String sql = @" SELECT TransID,
@@ -47,7 +54,11 @@ namespace PECS_v1
 
         }
 
+<<<<<<< HEAD
         // dgv: DataGridView
+=======
+        // dgv: DataGridView, delete selected Transactions
+>>>>>>> a7ee49726bc261177a8938e3268901ae6aaf6aa4
         private void dgvTransaction_UserDeletingRow(object sender,
             DataGridViewRowCancelEventArgs e)
         {
@@ -63,9 +74,15 @@ namespace PECS_v1
                 String sql = "DELETE FROM Transactions WHERE TransID = " + row.Cells[0].Value.ToString();
                 dbcTransac.executeSQL(sql);
             }
+<<<<<<< HEAD
 
         }
 
+=======
+        }
+
+		//load data to DataGridView
+>>>>>>> a7ee49726bc261177a8938e3268901ae6aaf6aa4
         private void loadDgvTransac()
         {
             bsTransac.DataSource = dbcTransac.getDT();
@@ -77,15 +94,23 @@ namespace PECS_v1
             dgvTransaction.Columns["UnitID"].Width = 80;
             dgvTransaction.Columns["TransDesc"].Width = 200;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> a7ee49726bc261177a8938e3268901ae6aaf6aa4
         }
 
         private void cmdClose_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             frmTransactionsPayrollHourly PayrollHour = new frmTransactionsPayrollHourly();
             frmTransPayrollHourly.loadLstPayrollMonths();
             frmTransPayrollHourly.Refresh();
 
+=======
+            frmTransPayrollHourly.loadLstPayrollMonths();
+            frmTransPayrollHourly.Refresh();
+>>>>>>> a7ee49726bc261177a8938e3268901ae6aaf6aa4
             this.Close();
             
         }
