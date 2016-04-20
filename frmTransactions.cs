@@ -55,16 +55,7 @@ namespace PECS_v1
         public frmTransactions()
         {
             InitializeComponent();
-
-            /*
-             * kenn code, 2009_12_02
-             * code to resolve heavy flickering
-             */
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
-
-            //buildlstTransactionsColumns();
-
-            
             nfi = (NumberFormatInfo)nfi.Clone();
             nfi.CurrencySymbol = "";
             loadPage();
@@ -184,6 +175,7 @@ namespace PECS_v1
 
             arrNew.Add(new ListValues("0", "Description", ListValues.FORWARD));
             arrNew.Add(new ListValues("1", "Transaction Attachments", ListValues.FORWARD));
+            arrNew.Add(new ListValues("2", "Payee", ListValues.FORWARD));
 
             cmboTransSearch.DataSource = arrNew;
             cmboTransSearch.DisplayMember = "Desc";
@@ -274,20 +266,14 @@ namespace PECS_v1
             String whereSQL = "";
             if (isSearched)
             {
+                whereSQL += " WHERE Transactions.TransID in (";
                 for (int i = 0; i < arrTransIDs.Count; i++)
                 {
-
-                    if (whereSQL.Contains("WHERE"))
-                    {
-                        whereSQL += " OR ";
-                    }
-                    else
-                    {
-                        whereSQL += " WHERE ";
-                    }
-
-                    whereSQL += " Transactions.TransID = " + arrTransIDs[i];
+                    whereSQL += arrTransIDs[i] + ",";
                 }
+                whereSQL = whereSQL.TrimEnd(',');
+                whereSQL += ")";
+                Console.WriteLine("ccc  " + whereSQL);
             }
             else
             {
@@ -372,6 +358,9 @@ namespace PECS_v1
                     data = InfoLoader.transSearchTransDetails(txtTransSearch.Text).Split('\n');
                     break;
 
+                case 2:
+                    data = InfoLoader.transSearchPayee(txtTransSearch.Text).Split('\n');
+                    break;
                 case -1:
                     return;
 
@@ -468,23 +457,6 @@ namespace PECS_v1
             
             Clipboard.SetText(data);
         }
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         //EVENTS
