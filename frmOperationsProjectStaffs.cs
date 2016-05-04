@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+
 namespace PECS_v1
 {
     public partial class frmOperationsProjectStaffs : Form
@@ -1180,7 +1181,7 @@ namespace PECS_v1
 
         public void ImportDataFromExcel(string excelFilePath)
         {
-            string myexceldataquery = String.Format("select * from [Inventory$A2:G291]");
+            string myexceldataquery = String.Format("select * from [Inventory$A2:H291]");
             string sexcelconnectionstring = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + excelFilePath + ";Extended Properties=" + "\"Excel 12.0 Xml;HDR=YES;IMEX=1;\"";
             //string ssexcelconnectionstring = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\ycao2\Downloads\Inventory.xlsx;Extended Properties=" + "\"Excel 12.0 Xml;HDR=YES;IMEX=1;\"";
             string ssqlconnectionstring = DBPath.connString;
@@ -1188,7 +1189,7 @@ namespace PECS_v1
             OleDbCommand oledbcmd = new OleDbCommand(myexceldataquery, oledbconn);
             DataTable DT_Excel = new DataTable();
             DataTable DT_DataBase = new DataTable();
-            DBConnector DT_DataBaseConn = new DBConnector("SELECT * FROM Operations_Rooms3", "Operations_Rooms3");
+            DBConnector DT_DataBaseConn = new DBConnector("SELECT * FROM Operations_Rooms2", "Operations_Rooms2");
             SqlConnection sqlconn = new SqlConnection(ssqlconnectionstring);
             //SqlCommand sqlcmd = new SqlCommand(sclearsql, sqlconn);
             sqlconn.Open();
@@ -1202,7 +1203,7 @@ namespace PECS_v1
             DT_DataBase = DT_DataBaseConn.getDT();
             //foreach (DataColumn column in DT_Excel.Columns)
             //{
-            //    Console.Write("Item: ");  
+            //    Console.Write("Item: ");
             //    Console.Write(column.ColumnName);
             //    Console.Write(" ");
             //}
@@ -1217,74 +1218,111 @@ namespace PECS_v1
             {
                 if (excelDtRow["Room Number"].ToString().Length != 0)
                 {
-                    DataRow[] DBfoundRow;
-                    DBfoundRow = DT_DataBase.Select("BuildID Like '%" + InfoLoader.BuildName2BuildID(excelDtRow["Building"].ToString().Trim()) + "%' AND UnitID Like '%" +
-                        excelDtRow["Department"].ToString().Trim() + "%' AND RoomNumber Like '" + excelDtRow["Room Number"].ToString().Trim() + "'");
-                    if (DBfoundRow.Length > 0)
-                    {
+                    //DataRow[] DBfoundRow;
+                    //DBfoundRow = DT_DataBase.Select("BuildID Like '%" + InfoLoader.BuildName2BuildID(
+                    //    excelDtRow["Building"].ToString().Trim()) + "%' AND UnitID Like '%" +
+                    //    excelDtRow["Department"].ToString().Trim() + "%' AND RoomNumber Like '" + 
+                    //    excelDtRow["Room Number"].ToString().Trim() + "'");
+                    //if (DBfoundRow.Length > 0)
+                    //{
 
-                        if ((!(excelDtRow["Department"].ToString().Trim().Equals(DBfoundRow[0]["UnitID"].ToString().Trim()))) ||
-                            (!(excelDtRow["Description"].ToString().Trim().Equals(DBfoundRow[0]["RoomDesc"].ToString().Trim()))) ||
-                            (!(excelDtRow["HEGIS"].ToString().Trim().Equals(DBfoundRow[0]["HEGIS"].ToString().Trim()))) ||
-                            (!(excelDtRow["Space Type"].ToString().Trim().Equals(DBfoundRow[0]["SpaceType"].ToString().Trim()))) ||
-                            (!(excelDtRow["SqFt"].ToString().Trim().Equals(DBfoundRow[0]["RoomSQft"].ToString().Trim())))
-                            )
-                        {
-                            DialogResult dialogResult = MessageBox.Show(@"Record has changed, do you want to update?" + "\n" +
-                            "Database:    " +
-                            InfoLoader.BuildID2BuildNameShort(DBfoundRow[0]["BuildID"].ToString()) + ", " + DBfoundRow[0]["UnitID"].ToString() + ", " +
-                            DBfoundRow[0]["RoomNumber"].ToString() + ", " + DBfoundRow[0]["RoomDesc"].ToString() + ", " +
-                            DBfoundRow[0]["HEGIS"].ToString() + ", " + DBfoundRow[0]["SpaceType"].ToString() + ", " +
-                            DBfoundRow[0]["RoomSQft"].ToString() + "\n" +
-                            "Excel:    " +
-                            excelDtRow["Building"].ToString() + ", " + excelDtRow["Department"].ToString() + ", " +
-                            excelDtRow["Room Number"].ToString() + ", " + excelDtRow["Description"].ToString() + ", " +
-                            excelDtRow["HEGIS"].ToString() + ", " + excelDtRow["Space Type"].ToString() + ", " +
-                            excelDtRow["SqFt"].ToString() + "\n"
-                            , "Record changed", MessageBoxButtons.YesNo);
-                            if (dialogResult == DialogResult.Yes)
-                            {
-                                String sql = @"   UPDATE Operations_Rooms3 " +
-                                       "SET UnitID =  " + "'" + excelDtRow["Department"] + "'" +
-                                       ", RoomDesc =  " + "'" + excelDtRow["Description"] + "'" +
-                                       ", HEGIS =  " + "'" + excelDtRow["HEGIS"] + "'" +
-                                       ", SpaceType =  " + "'" + excelDtRow["Space Type"] + "'" +
-                                       ", RoomSQft =  " + "'" + excelDtRow["SqFt"] + "'" +
-                                       " WHERE BuildID Like '%" + InfoLoader.BuildName2BuildID(excelDtRow["Building"].ToString()) + "%' AND UnitID Like '%" +
-                                       excelDtRow["Department"].ToString() + "%' AND RoomNumber Like '" + excelDtRow["Room Number"].ToString() + "'";
-                                //Console.WriteLine(sql);
-                                new DBConnector(sql, "Operations_Rooms3");
-                            }
-                            else if (dialogResult == DialogResult.No)
-                            {
-                            }
-                        }
-                    }
-                    else
-                    {
-                        DialogResult dialogResult = MessageBox.Show(@"Record does not exist, do you want to add the new record?" + "\n" +
-                        "New Record from Excel:    " +
-                            excelDtRow["Building"].ToString() + ", " + excelDtRow["Department"].ToString() + ", " +
-                            excelDtRow["Room Number"].ToString() + ", " + excelDtRow["Description"].ToString().Replace("'", "''") + ", " +
-                            excelDtRow["HEGIS"].ToString() + ", " + excelDtRow["Space Type"].ToString() + ", " +
-                            excelDtRow["SqFt"].ToString() + "\n"
-                        , "New Record", MessageBoxButtons.YesNo);
+                    //    if ((!(excelDtRow["Department"].ToString().Trim().Equals(DBfoundRow[0]["UnitID"].ToString().Trim()))) ||
+                    //        (!(excelDtRow["Description"].ToString().Trim().Equals(DBfoundRow[0]["RoomDesc"].ToString().Trim()))) ||
+                    //        (!(excelDtRow["HEGIS"].ToString().Trim().Equals(DBfoundRow[0]["HEGIS"].ToString().Trim()))) ||
+                    //        (!(excelDtRow["Space Type"].ToString().Trim().Equals(DBfoundRow[0]["SpaceType"].ToString().Trim()))) ||
+                    //        (!(excelDtRow["SqFt"].ToString().Trim().Equals(DBfoundRow[0]["RoomSQft"].ToString().Trim())))
+                    //        )
+                    //    {
+                    //        DialogResult dialogResult = MessageBox.Show(@"Record has changed, do you want to update?" + "\n" +
+                    //        "Database:    " +
+                    //        InfoLoader.BuildID2BuildNameShort(DBfoundRow[0]["BuildID"].ToString()) + ", " + DBfoundRow[0]["UnitID"].ToString() + ", " +
+                    //        DBfoundRow[0]["RoomNumber"].ToString() + ", " + DBfoundRow[0]["RoomDesc"].ToString() + ", " +
+                    //        DBfoundRow[0]["HEGIS"].ToString() + ", " + DBfoundRow[0]["SpaceType"].ToString() + ", " +
+                    //        DBfoundRow[0]["RoomSQft"].ToString() + "\n" +
+                    //        "Excel:    " +
+                    //        excelDtRow["Building"].ToString() + ", " + 
+                    //        excelDtRow["Department"].ToString() + ", " +
+                    //        excelDtRow["Room Number"].ToString() + ", " + 
+                    //        excelDtRow["Description"].ToString() + ", " +
+                    //        excelDtRow["HEGIS"].ToString() + ", " + 
+                    //        excelDtRow["Space Type"].ToString() + ", " +
+                    //        excelDtRow["SqFt"].ToString() + "\n"
+                    //        , "Record changed", MessageBoxButtons.YesNo);
+                    //        if (dialogResult == DialogResult.Yes)
+                    //        {
+                    //            String sql = @"   UPDATE Operations_Rooms3 " +
+                    //                   "SET UnitID =  " + "'" + excelDtRow["Department"] + "'" +
+                    //                   ", RoomDesc =  " + "'" + excelDtRow["Description"] + "'" +
+                    //                   ", HEGIS =  " + "'" + excelDtRow["HEGIS"] + "'" +
+                    //                   ", SpaceType =  " + "'" + excelDtRow["Space Type"] + "'" +
+                    //                   ", RoomSQft =  " + "'" + excelDtRow["SqFt"] + "'" +
+                    //                   " WHERE BuildID Like '%" + InfoLoader.BuildName2BuildID(
+                    //                   excelDtRow["Building"].ToString()) + "%' AND UnitID Like '%" +
+                    //                   excelDtRow["Department"].ToString() + "%' AND RoomNumber Like '" + 
+                    //                   excelDtRow["Room Number"].ToString() + "'";
+                    //            //Console.WriteLine(sql);
+                    //            new DBConnector(sql, "Operations_Rooms3");
+                    //        }
+                    //        else if (dialogResult == DialogResult.No)
+                    //        {
+                    //        }
+                    //    }
+                    //}
+                    //else
+                    //{
 
-                        if (dialogResult == DialogResult.Yes)
-                        {
-                            String sql = @" INSERT INTO Operations_Rooms3 (BuildID,UnitID,RoomNumber,RoomDesc,HEGIS,SpaceType,RoomSQft) " +
-                            "VALUES ('" +
-                            InfoLoader.BuildName2BuildID(excelDtRow["Building"].ToString()) + "', '" + excelDtRow["Department"].ToString() + "', '" +
-                            excelDtRow["Room Number"].ToString() + "', '" + excelDtRow["Description"].ToString().Replace("'", "''") + "', '" +
-                            excelDtRow["HEGIS"].ToString() + "', '" + excelDtRow["Space Type"].ToString() + "', '" +
-                            excelDtRow["SqFt"].ToString() + "')";
+
+                    //DialogResult dialogResult = MessageBox.Show(@"Record does not exist, do you want to add the new record?" + "\n" +
+                    //"New Record from Excel:    " +
+                    //    excelDtRow["Building"].ToString() + ", " +
+                    //    excelDtRow["Department"].ToString() + ", " +
+                    //    excelDtRow["Room Number"].ToString() + ", " +
+                    //    excelDtRow["Description"].ToString().Replace("'", "''") + ", " +
+                    //    excelDtRow["HEGIS"].ToString() + ", " +
+                    //    excelDtRow["Space Type"].ToString() + ", " +
+                    //    excelDtRow["SqFt"].ToString() + ", " +
+                    //    excelDtRow["DeptID"].ToString() + "\n"
+                    //, "New Record", MessageBoxButtons.YesNo);
+                    //if (dialogResult == DialogResult.Yes)
+                    //{
+                            //[RoomID],[BuildID],[UnitID],[SpaceTypeID],[RoomNumber],[RoomDesc],[RoomNote],[RoomSQft],[RoomWorkSpaceMax],[Area],[StationID],[StationType],[FacilityCategory],[CPECCode],[DeptDesc],[SpaceType],[DeptID],[HEGIS]
+                            //String sql = @" INSERT INTO Operations_Rooms3 (BuildID,UnitID,RoomNumber,RoomDesc,HEGIS,SpaceType,RoomSQft) " +
+                        String sql = @" INSERT INTO Operations_Rooms2 (BuildID,UnitID,SpaceTypeID,RoomNumber,RoomDesc,RoomNote,RoomSQft,RoomWorkSpaceMax,Area,StationID,StationType,FacilityCategory,CPECCode,DeptDesc,SpaceType,DeptID,HEGIS) " +
+                        "VALUES (('" +
+                        InfoLoader.BuildName2BuildID(excelDtRow["Building"].ToString()) + "'), ('" +
+                        InfoLoader.cleanDeptName(excelDtRow["Department"].ToString()) + "'), ('" +
+                                                    "'), ('" +
+                                                    excelDtRow["Room Number"].ToString() + "'), ('" +
+                                                    excelDtRow["Description"].ToString().Replace("'", "''") + "'), ('" +
+                                                    "'), ('" +
+                                                    excelDtRow["SqFt"].ToString() + "'), ('" +
+                                                    "'), ('" +
+                                                    "'), ('" +
+                                                    "'), ('" +
+                                                    "'), ('" +
+                                                    "'), ('" +
+                                                    "'), ('" +
+                                                    "'), ('" +
+                                                    excelDtRow["Space Type"].ToString() + "'), ('" +
+                                                    excelDtRow["DeptID"].ToString() + "'), ('" +    
+                                                    excelDtRow["HEGIS"].ToString() + "'))";
+
+                            //String sql = @" INSERT INTO Operations_Rooms3 (BuildID,UnitID,RoomNumber,RoomDesc,HEGIS,SpaceType,RoomSQft) " +
+                            //"VALUES ('" +
+                            //InfoLoader.BuildName2BuildID(excelDtRow["Building"].ToString()) + "', '" + 
+                            //                            excelDtRow["Department"].ToString() + "', '" +
+                            //                            excelDtRow["Room Number"].ToString() + "', '" + 
+                            //                            excelDtRow["Description"].ToString().Replace("'", "''") + "', '" +
+                            //                            excelDtRow["HEGIS"].ToString() + "', '" + 
+                            //                            excelDtRow["Space Type"].ToString() + "', '" +
+                            //                            excelDtRow["SqFt"].ToString() + "')";
                             //Console.WriteLine(sql);
-                            new DBConnector(sql, "Operations_Rooms3");
-                        }
-                        else if (dialogResult == DialogResult.No)
-                        {
-                        }
-                    }
+                            new DBConnector(sql, "Operations_Rooms2");
+                        //}
+                        //else if (dialogResult == DialogResult.No)
+                        //{
+                        //}
+                    //}
                 }
             }
             dr.Close();
